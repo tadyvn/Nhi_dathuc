@@ -42,30 +42,28 @@ void NhapDaThuc(char c[], int dt[], int* mu_lon_nhat) {
 }
 
 void XuatDaThuc(int dt[], int mu_lon_nhat) {
-	int count = 0;
-    bool is_zero = true;
-    
-    printf("=> Da Thuc: ");
-
-    for (int i = mu_lon_nhat; i >= 0; i--) {
-        if (dt[i] != 0) {
-        	if (i == 0) {
-        		printf("%d", dt[i]); // Hang tu tu do
-            } 
-			else 
-             if (dt[i] > 0) {
-                    if (!is_zero) {
-                        printf(" + ");
-                    }
-                    printf("%d*x^%d", dt[i], i);
-                } else  {
-                    printf(" - %d*x^%d", -dt[i], i);
-                }
+	bool first = true;
+    for(int i=mu_lon_nhat;i>=0;i--)
+    {
+        if(dt[i]!=0)
+        {
+            // xuat ra neu la phan tu dau tien
+            if(first)
+            {
+                printf("%d*x^%d",dt[i],i);
+                first = false;
             }
-            is_zero = false;
+            else
+            {
+                if (dt[i] > 0)
+                    printf(" + ");
+                else
+                    printf(" - ");
+                printf("%d*x^%d",abs(dt[i]),i); 
+            }
         }
-    if (is_zero)
-        printf("0");
+    }
+    if(first) printf("0"); 
     printf("\n");
 }
 
@@ -110,6 +108,11 @@ int main() {
     
     printf("Nhap da thuc 2: ");
     NhapDaThuc(c2, dt2, &mu_lon_nhat_2);
+    
+    if (mu_lon_nhat_1 > mu_lon_nhat_2) 
+        mu_lon_nhat = mu_lon_nhat_1; 
+    else 
+        mu_lon_nhat = mu_lon_nhat_2;
     
     printf("KET QUA:\n");
     
