@@ -4,28 +4,43 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-void xuli(char c[], int dt[], int* mu_lon_nhat) {
+void xuly(char c[], int dt[], int* mu_lon_nhat) {
+    int dau;
     for (int i = 0; i < strlen(c); i++) {
+        dau = 1;
+        while (!isdigit(c[i])){
+            if (c[i] == '-')    
+            {
+                dau = (-1)*dau;
+            }
+            ++i;
+            
+        }
+        
         if (isdigit(c[i])) {
+            // tim he so
             int tmp = 0;
             while (c[i] != '*' && c[i] != '\0') {
                 tmp = tmp * 10 + c[i] - '0';
                 ++i;
             }
+            // tim so mu
             i += 3;
             int mu = 0;
             while (isdigit(c[i])) {
                 mu = mu * 10 + c[i] - '0'; 
                 ++i;
             }
-            dt[mu] += tmp;
+            
+            dt[mu] += dau*tmp;
+            
             if (mu > (*mu_lon_nhat))
 			{
 				(*mu_lon_nhat) = mu;
-			 } 
+			} 
         }
     }
-}
+    }
 
 void NhapDaThuc(char c[], int dt[], int* mu_lon_nhat) {
 	int  mu_lon_nhat_1 = 0, mu_lon_nhat_2 = 0;
@@ -37,7 +52,7 @@ void NhapDaThuc(char c[], int dt[], int* mu_lon_nhat) {
     fgets(c, 1000, stdin);
     c[strcspn(c, "\n")] = '\0';
     memset(dt, 0, sizeof(int) * 10001);
-    xuli(c, dt, mu_lon_nhat);
+    xuly(c, dt, mu_lon_nhat);
     
 }
 
