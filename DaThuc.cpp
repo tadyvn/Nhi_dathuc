@@ -82,6 +82,32 @@ void XuatDaThuc(int dt[], int mu_lon_nhat) {
     printf("\n");
 }
 
+void XuatDaThuc_2(float dt[], int mu_lon_nhat) {
+	bool first = true;
+    for(int i=mu_lon_nhat;i>=0;i--)
+    {
+        if(dt[i]!=0)
+        {
+            // xuat ra neu la phan tu dau tien
+            if(first)
+            {
+                printf("%f*x^%d",dt[i],i);
+                first = false;
+            }
+            else
+            {
+                if (dt[i] > 0)
+                    printf(" + ");
+                else
+                    printf(" - ");
+                printf("%f*x^%d",abs(dt[i]),i); 
+            }
+        }
+    }
+    if(first) printf("0"); 
+    printf("\n");
+}
+
 void TongDaThuc(int dt1[], int dt2[], int dt_tong[], int mu_lon_nhat) {
     for (int i = 0; i <= mu_lon_nhat; i++) {
         dt_tong[i] = dt1[i] + dt2[i];
@@ -102,15 +128,22 @@ void TichDaThuc(int dt1[], int dt2[], int dt_tich[], int mu_lon_nhat_1, int mu_l
     }
 }
 
-void ThuongDaThuc (int dt1[], int dt2[],int dt_thuong[], int dt_du[], int mu_lon_nhat_1, int mu_lon_nhat_2){
-	for (int i =  mu_lon_nhat_1 - mu_lon_nhat_2; i >= 0; i--){
-		dt_thuong[i]= dt1[i+mu_lon_nhat_2] / dt2[mu_lon_nhat_2];
+void ThuongDaThuc (int dt1[], int dt2[], float dt_thuong[], float dt_du[], int mu_lon_nhat_1, int mu_lon_nhat_2){
+    // chuyen doi int array sang float array
+    float dt1_float[10001];
+    for (int i = 0; i <= mu_lon_nhat_1; i++) {
+        dt1_float[i] = (float)dt1[i];
+    }
+    // thuc hien phep chia
+	for (int i = mu_lon_nhat_1 - mu_lon_nhat_2; i >= 0; i--){
+		dt_thuong[i]= dt1_float[i+mu_lon_nhat_2] / dt2[mu_lon_nhat_2];
 		for (int j = mu_lon_nhat_2; j >= 0; j--){
-			dt1[i+j] -= dt_thuong[i] * dt2[j];
-	}
-}
-		for (int i=0; i<mu_lon_nhat_1; i++)
-			dt_du[i]=dt1[i];
+			dt1_float[i+j] -= dt_thuong[i] * dt2[j];
+    	}
+    }
+    // phan du la phan con lai trong da thuc chia
+	for (int i=0; i<mu_lon_nhat_1; i++)
+		dt_du[i]=dt1_float[i];
 }
 int main() {
     char c1[1000], c2[1000];
@@ -150,13 +183,12 @@ int main() {
     XuatDaThuc(dt_tich, mu_lon_nhat_1 + mu_lon_nhat_2);
 
 	//Tinh thuong hai da thuc
-	int dt_thuong [10001], dt_du[10001];
+	float dt_thuong [10001], dt_du[10001];
 	printf ("Thuong 2 da thuc la:\t");
 	ThuongDaThuc(dt1, dt2, dt_thuong, dt_du, mu_lon_nhat_1, mu_lon_nhat_2);
-   	XuatDaThuc(dt_thuong, mu_lon_nhat_1 - mu_lon_nhat_2);
+   	XuatDaThuc_2(dt_thuong, mu_lon_nhat_1 - mu_lon_nhat_2);
    	printf ("\nPhan du:");
-	XuatDaThuc(dt_du, mu_lon_nhat_1 - 1);
+	XuatDaThuc_2(dt_du, mu_lon_nhat_1 - 1);
 	
     return 0;
 }
-
