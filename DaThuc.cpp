@@ -43,12 +43,6 @@ void xuly(char c[], int dt[], int* mu_lon_nhat) {
     }
 
 void NhapDaThuc(char c[], int dt[], int* mu_lon_nhat) {
-	int  mu_lon_nhat_1 = 0, mu_lon_nhat_2 = 0;
-	int count = 0;
-    	if (mu_lon_nhat_1 > mu_lon_nhat_2){
-    		*mu_lon_nhat = mu_lon_nhat_1; 
-		}
-		 else *mu_lon_nhat = mu_lon_nhat_2;
     fgets(c, 1000, stdin);
     c[strcspn(c, "\n")] = '\0';
     memset(dt, 0, sizeof(int) * 10001);
@@ -142,7 +136,7 @@ void ThuongDaThuc (int dt1[], int dt2[], float dt_thuong[], float dt_du[], int m
     	}
     }
     // phan du la phan con lai trong da thuc chia
-	for (int i=0; i<mu_lon_nhat_1; i++)
+	for (int i=0; i<=mu_lon_nhat_1; i++)
 		dt_du[i]=dt1_float[i];
 }
 int main() {
@@ -188,7 +182,7 @@ int main() {
 	ThuongDaThuc(dt1, dt2, dt_thuong, dt_du, mu_lon_nhat_1, mu_lon_nhat_2);
    	XuatDaThuc_2(dt_thuong, mu_lon_nhat_1 - mu_lon_nhat_2);
    	printf ("\nPhan du:");
-	XuatDaThuc_2(dt_du, mu_lon_nhat_1 - 1);
+	XuatDaThuc_2(dt_du, mu_lon_nhat_1);
 	
     return 0;
 }
