@@ -74,7 +74,7 @@ void XuatDaThuc(int dt[], int mu_lon_nhat) {
                     printf(" + ");
                 else
                     printf(" - ");
-                printf("%d*x^%d",abs(dt[i]),i); 
+                printf("%d*x^%d", abs(dt[i]),i); 
             }
         }
     }
@@ -100,7 +100,7 @@ void XuatDaThuc_2(float dt[], int mu_lon_nhat) {
                     printf(" + ");
                 else
                     printf(" - ");
-                printf("%f*x^%d",abs(dt[i]),i); 
+                printf("%f*x^%d", fabs(dt[i]),i); 
             }
         }
     }
